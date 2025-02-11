@@ -1,4 +1,6 @@
 import logging
+from aiogram import F
+from aiogram.filters import Command
 from aiogram import Bot, Dispatcher, types  # Исправленный импорт
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from database import Database  # Импортируем наш класс для работы с базой данных
@@ -14,15 +16,15 @@ dp = Dispatcher()
 
 # Инициализация базы данных
 db = Database(
-    dbname="your_dbname",
-    user="your_username",
+    dbname="testdb",
+    user="postgres",
     password="your_password",
     host="localhost",
     port=5432
 )
 
 # Обработчик команды /start
-@dp.message_handler(commands=['start'])
+@dp.message(F.text, Command('start'))
 async def send_welcome(message: types.Message):
     await message.reply("Привет! Я бот для игры 'Правда или действие'. Напиши @brumbabot в любом чате, чтобы начать игру!")
 
